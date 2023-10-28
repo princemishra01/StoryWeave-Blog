@@ -40,7 +40,10 @@ export class AuthService {
         try {
             return await this.account.get();
         } catch (error) {
-            console.log("Appwrite service :: getCurrentUser :: error", error);
+            if (error.code !== 401 || error.type !== 'general_unauthorized_scope') {
+                throw e;
+            }
+            // console.log("Appwrite service :: getCurrentUser :: error", error);
         }
 
         return null;
